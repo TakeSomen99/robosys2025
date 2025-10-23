@@ -1,10 +1,11 @@
-!/usr/bin/python3
-# SPDX-FileCopyrightText: 2025 TakeSomen99 s24c1117ug@s.chibakoudai.jp
- import sys
- ans = 0　 #もともと0.0だったのを0に変更
+#!/usr/bin/python3
+#SPDX-FileCopyrightText: 2025 TakeSomen99
+
+import sys
+ans = 0 #もともと0.0だったものを0に変更
 for line in sys.stdin:
-    try: 
-        ans += int(line)   
-    except:　
+    try:
+        ans += int(line)
+    except:
         ans += float(line)
-    print(ans) 
+print(ans)
