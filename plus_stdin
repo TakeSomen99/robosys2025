@@ -7,8 +7,7 @@ for line in sys.stdin:
         ans += int(line)   
 except:　
         ans += float(line)
- print(ans)#!/usr/bin/python3
-import sys
+ print(ans)
 
 x = 0.0
 for n in sys.argv[1:]:
