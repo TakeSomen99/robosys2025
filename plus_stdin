@@ -3,15 +3,8 @@
  import sys
  ans = 0　 #もともと0.0だったのを0に変更
 for line in sys.stdin:
- try: 
+    try: 
         ans += int(line)   
-except:　
+    except:　
         ans += float(line)
- print(ans)
-
-x = 0.0
-for n in sys.argv[1:]:
-    x += float(n)
-    print(x)
-
-print("total amount is {}" .format(x)) 
+    print(ans) 
