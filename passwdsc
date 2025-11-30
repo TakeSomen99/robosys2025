@@ -9,11 +9,11 @@ import numpy as np
 import unicodedata as uni
 
 
-class InputError:
+class InputError(Exception):
     pass
 
 
-class UnexpectedError:
+class UnexpectedError(Exception):
     pass
 
 
@@ -22,8 +22,9 @@ def input_error_check(i):
         raise InputError("input is empty")
     if " " in i:
         raise InputError("input has a space")
-    if uni.east_asian_width(i) in 'FHW':
-        raise InputError("input has a double width character")
+    for c in i:
+        if uni.east_asian_width(c) in 'FHW':
+            raise InputError("input has a double width character")
     
     return i
 
@@ -138,7 +139,7 @@ def analys_password_for_distribution(password):
 def main():
     password = input()
 
-
+    input_error_check(password)
 
     len_score = analys_password_for_length(password)
     cha_score = analys_password_for_chartype(password)
@@ -158,8 +159,8 @@ if __name__ == "__main__":
     try:
         main()
     except InputError as e:
-        print("Error: {e}", file=sys.stderr)
+        print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
     except UnexpectedError as e:
-        print("UnexpectedError: {e}", file=sys.stderr)
-        sys.exit(1)
+        print(f"UnexpectedError: {e}", file=sys.stderr)
+        sys.exit(2)
