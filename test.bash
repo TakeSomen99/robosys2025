@@ -10,8 +10,8 @@ ng(){
 res=0
 
 ### NORMAL INPUT ###
-out = $(echo '111aaa' | ./passwdsc)
-[ "${out}" =  0.23] || ng "$LINENO"
+out=$(echo '111aaa' | ./passwdsc)
+[ "${out}" =  0.23 ] || ng "$LINENO"
 
 ### STRANGE INPUT ###
 #input double byte character
@@ -20,7 +20,7 @@ out=$(echo あ | ./passwdsc)
 [ "${out}" = "" ] || ng "$LINENO"
 
 #input that has space
-out=$(echo aa bb | ./passwdsc)
+out=$(echo 'aa bb' | ./passwdsc)
 [ "$?" = 1 ] || ng "$LINENO"
 [ "${out}" = "" ] || ng "$LINENO"
 
