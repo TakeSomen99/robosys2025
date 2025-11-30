@@ -6,6 +6,26 @@ import sys
 import re
 import string
 import numpy as np
+import unicodedata as uni
+
+
+class InputError:
+    pass
+
+
+class UnexpectedError:
+    pass
+
+
+def input_error_check(i):
+    if i == "":
+        raise InputError("input is empty")
+    if " " in i:
+        raise InputError("input has a space")
+    if uni.east_asian_width(i) in 'FHW':
+        raise InputError("input has a double width character")
+    
+    return i
 
 
 def analys_password_for_length(password):
@@ -46,7 +66,7 @@ def analys_password_for_diversity(password):
     _upper = set(string.ascii_uppercase)
     _digit = set(string.digits)
 
-    _symbol32 = set(r"""`~!@#$%^&*()_+-={}[]\|:;"'<>,.?/""")
+    _symbol32 = set(r"""`~!@#$%^&*()_+-={}[]|\:;"'<>,.?/""")
     _symbol22 = set("!$%&'()*+,/;<=>?[]^{}~")
     _symbol12 = set("$-./:@[]!#&?")
 
@@ -117,14 +137,29 @@ def analys_password_for_distribution(password):
 
 def main():
     password = input()
+
+
+
     len_score = analys_password_for_length(password)
     cha_score = analys_password_for_chartype(password)
     div_score = analys_password_for_diversity(password)
     dis_score = analys_password_for_distribution(password)
+
     final_score = (len_score + cha_score + div_score + dis_score) / 4
     final_score_rounded = round(final_score,2)
+
+    if final_score_rounded < 0 or final_score_rounded > 1:
+        raise UnexpectedError("result value dose not fall between 0 and 1")
+
     print(final_score_rounded)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except InputError as e:
+        print("Error: {e}", file=sys.stderr)
+        sys.exit(1)
+    except UnexpectedError as e:
+        print("UnexpectedError: {e}", file=sys.stderr)
+        sys.exit(1)
