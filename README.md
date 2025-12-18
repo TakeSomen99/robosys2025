@@ -2,7 +2,9 @@
 標準入力からパスワードの安全度（強度）を0～1の範囲で出力します。
 
 ## 使用技術一覧
+![](https://github.com/TakeSomen99/robosys2025/actions/workflows/test.yml/badge.svg)
 ![Static Badge](https://img.shields.io/badge/python-blue)
+
 
 ## 環境
 + Ubuntu: 24.04 LTS
