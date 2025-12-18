@@ -17,16 +17,29 @@ class UnexpectedError(Exception):
     pass
 
 
-def input_error_check(i):
-    if i == "":
-        raise InputError("input is empty")
-    if " " in i:
-        raise InputError("input has a space")
-    for c in i:
-        if uni.east_asian_width(c) in 'FHW':
-            raise InputError("input has a double width character")
+def read_input():
+    MAX_BYTE = 1024
     
-    return i
+    raw = sys.stdin.buffer.read(MAX_BYTE+1)
+    if not raw:
+        raise InputError("input is empty")
+    if len(raw) > MAX_BYTE:
+        raise InputError("input is too learge")
+    try:
+        s = raw.decode("utf-8", errors="strict").rstrip("\r\n")
+    except UnicodeDecodeError:
+        raise InputError("binary input is not allowed")
+    if ' ' in s:
+        raise InputError("input including space is not allowed")
+    for c in s:
+        if uni.category(c) == "Cc":
+            raise InputError("input including control characters is not allowed")
+        if uni.east_asian_width(c) in "FHW":
+            raise InputError("input including double width character is not allowed")
+        if uni.combining(c):
+            raise InputError("input including combining characters is not allowed")
+    
+    return s
 
 
 def analys_password_for_length(password):
@@ -137,9 +150,7 @@ def analys_password_for_distribution(password):
 
 
 def main():
-    password = input()
-
-    input_error_check(password)
+    password = read_input()
 
     len_score = analys_password_for_length(password)
     cha_score = analys_password_for_chartype(password)
