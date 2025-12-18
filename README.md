@@ -14,8 +14,7 @@
 ```bash
 $ git clone https://github.com/TakeSomen99/robosys2025.git
 $ cd robosys2025
-# パスワード文字列を標準入力から入力する
-$ echo '6g8o!d44?d' | ./passwdsc
+$ echo '6g8o!d44?d' | ./passwdsc # パスワード文字列を標準入力から入力する
 ```
 
 ## 備考
